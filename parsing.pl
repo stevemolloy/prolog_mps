@@ -4,13 +4,13 @@
 ws --> [W], { char_type(W, whitespace) }, ws.
 ws --> [].
 
-ident([L|Ls])  --> [L], { char_type(L, alpha)}, symbol(Ls).
+ident([L|Ls])  --> ws, [L], { char_type(L, alpha)}, symbol(Ls), ws.
 symbol([L|Ls]) --> [L], { char_type(L, ascii_graphic) }, symbol(Ls).
 symbol([])     --> [].
 
-statement([Id1, Op, Id2]) --> ws, ident(Id1), ws, binop(Op), ws, ident(Id2), ws.
-statement([Id1, Op, Id2]) --> ws, ident(Id1), ws, equalop(Op), ws, ident(Id2), ws.
-statement([Id1, Op, Id2]) --> ws, unop(Op), ws, ident(Id2), ws.
+statement([Id1, Op, Id2]) --> ident(Id1), binop(Op), ident(Id2).
+statement([Id1, Op, Id2]) --> ident(Id1), equalop(Op), ident(Id2).
+statement([Op, Id2]) --> unop(Op), ident(Id2).
 
 binop(Ws) --> seq(Ws), { Ws="AND" }.
 binop(Ws) --> seq(Ws), { Ws="OR" }.
