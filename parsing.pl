@@ -12,9 +12,9 @@ statement([Id1, Op, Id2]) --> ident(Id1), binop(Op), ident(Id2).
 statement([Id1, Op, Id2]) --> ident(Id1), equalop(Op), ident(Id2).
 statement([Op, Id2]) --> unop(Op), ident(Id2).
 
-binop(Ws) --> seq(Ws), { Ws="AND" }.
-binop(Ws) --> seq(Ws), { Ws="OR" }.
-unop(Ws) --> seq(Ws), { Ws="NOT" }.
+binop(and) --> seq(Ws), { Ws="AND" }.
+binop(or) --> seq(Ws), { Ws="OR" }.
+unop(not) --> seq(Ws), { Ws="NOT" }.
 
-equalop(Ws) --> seq(Ws), { Ws="="}.
+equalop(testequals) --> seq(Ws), { Ws="="}.
 
