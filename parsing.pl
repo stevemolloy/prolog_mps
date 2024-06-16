@@ -12,6 +12,7 @@ symbol([])     --> [].
 
 statement(Id) --> ident(Id).
 statement([Id1, Op, Id2]) --> statement(Id1), binop(Op), statement(Id2).
+statement([Id1, Op, Unop, Id2]) --> statement(Id1), binop(Op), unop(Unop), statement(Id2).
 statement([Op, Id2]) --> unop(Op), statement(Id2).
 
 statement(S) --> ws, seq("("), statement(S), seq(")"), ws.
