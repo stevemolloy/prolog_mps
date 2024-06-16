@@ -11,13 +11,13 @@ symbol([L|Ls]) --> [L], { char_type(L, ascii_graphic) }, symbol(Ls).
 symbol([])     --> [].
 
 statement(Id) --> ident(Id).
+statement([Unop, Id]) --> unop(Unop), statement(Id).
 statement([Id1, Op, Id2]) --> statement(Id1), binop(Op), statement(Id2).
-statement([Op, Id2]) --> unop(Op), statement(Id2).
 
 statement(S) --> ws, seq("("), statement(S), seq(")"), ws.
 
-binop(and)    --> "AND".
-binop(or)     --> "OR".
-binop(equals) --> "=".
-unop(not)     --> "NOT".
+binop(and)    --> ws, "AND", ws.
+binop(or)     --> ws, "OR", ws.
+binop(equals) --> ws, "=", ws.
+unop(not)     --> ws, "NOT", ws.
 
