@@ -1,14 +1,14 @@
 :- use_module(library(dcgs)).
 :- use_module(library(charsio)).
 
-ws --> [W], { char_type(W, whitespace) }, ws.
+ws --> [W], { char_type(W, whitespace) }, !, ws.
 ws --> [].
 
 statement(T) --> term(T).
 statement([Id1, Op, Id2]) --> term(Id1), binop(Op), statement(Id2).
 
 term(Id)        --> ident(Id).
-term([Unop,Id]) --> unop(Unop), statement(Id).
+term([Unop,Id]) --> unop(Unop), ident(Id).
 term(S)         --> ws, "(", statement(S), ")", ws.
 
 ident([L|Ls])  --> ws, [L], { char_type(L, alpha)}, symbol(Ls), ws.
