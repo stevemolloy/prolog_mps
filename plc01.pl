@@ -1,3 +1,41 @@
+length_j({}, 0).
+length_j({_:_}, 1).
+length_j({_, Rs}, L) :-
+  length_j({Rs}, L0),
+  L is L0 + 1.
+
+flowmeter(Flowmeter) :-
+  json(J),
+  J = {"flow_meter": Flowmeter, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
+
+ion_pump(Ionpump) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": Ionpump, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
+
+rfdump(Rfdump) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": Rfdump, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
+
+switch(Switch) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": Switch, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
+
+thermocouple(TC) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": TC, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
+
+unidentified(Unident) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": Unident, "vacuum_gauge": _, "valve": _}.
+
+vacuum_gauge(Vac) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": Vac, "valve": _}.
+
+valve(Valve) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": Valve}.
+
 json({
     "flow_meter": {
         "analogue_read": {

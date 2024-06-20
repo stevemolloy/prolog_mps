@@ -1,4 +1,14 @@
-% :- consult(plc01).
+:- use_module(library(dcgs)).
+
+consult('plc01.pl').
+
+% json({name: 12, age: 45, wife: 72, job: 16}).
+
+length_j({}, 0).
+length_j({_:_}, 1).
+length_j({_, Rs}, L) :-
+  length_j({Rs}, L0),
+  L is L0 + 1.
 
 flowmeter(Flowmeter) :-
   json(J),
