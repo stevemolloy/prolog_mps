@@ -1,21 +1,34 @@
-:- use_module(library(http/json)).
-:- use_module(library(dicts)).
+% :- consult(plc01).
 
-fname_json(Filename, JSON_Term) :-
-  open(Filename, read, Stream),
-  json_read_dict(Stream, JSON_Term),
-  close(Stream).
+flowmeter(Flowmeter) :-
+  json(J),
+  J = {"flow_meter": Flowmeter, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
 
-jsonfile_rfdumpinfo(Filename, RfJson) :-
-  fname_json(Filename, JT),
-  RfJson = JT.rfdump.
+ion_pump(Ionpump) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": Ionpump, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
 
+rfdump(Rfdump) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": Rfdump, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
 
+switch(Switch) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": Switch, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
 
-main :-
-  Fname = "R3_B080603_CAB02_VAC_PLC01.json",
-  jsonfile_rfdumpinfo(Fname, Rfdump),
-  dict_keys(Rfdump, Ks),
-  Ks = [K|_],
-  X = .(Rfdump, K),
-  portray_clause(X).
+thermocouple(TC) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": TC, "unidentified objects": _, "vacuum_gauge": _, "valve": _}.
+
+unidentified(Unident) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": Unident, "vacuum_gauge": _, "valve": _}.
+
+vacuum_gauge(Vac) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": Vac, "valve": _}.
+
+valve(Valve) :-
+  json(J),
+  J = {"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": Valve}.
+
