@@ -1,9 +1,5 @@
 :- use_module(library(lists)).
 
-json_length(J, L) :-
-  phrase(json_list(J), JL),
-  length(JL, L).
-
 json_flowmeter({"flow_meter": Flowmeter, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, FlowmeterList) :-
   phrase(json_list(Flowmeter), FlowmeterList).
 
@@ -27,6 +23,10 @@ json_vacuum_gauge({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "th
 
 json_valve({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": Valve}, ValveList) :-
   phrase(json_list(Valve), ValveList).
+
+json_length(J, L) :-
+  phrase(json_list(J), JL),
+  length(JL, L).
 
 json_list({}) --> [].
 json_list({A}) --> and_list(A).
