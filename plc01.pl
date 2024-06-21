@@ -1,4 +1,9 @@
 :- use_module(library(lists)).
+:- use_module(parsing).
+
+json_conditions(Json, Statement) :-
+  member(_:{"conditions":Conditions,_}, Json),
+  phrase(statement(Statement), Conditions).
 
 json_flowmeter({"flow_meter": Flowmeter, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, FlowmeterList) :-
   phrase(json_list(Flowmeter), FlowmeterList).
