@@ -1,3 +1,5 @@
+:- module(parsing, [statement//1]).
+
 :- use_module(library(dcgs)).
 :- use_module(library(charsio)).
 
