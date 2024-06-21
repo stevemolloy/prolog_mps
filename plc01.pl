@@ -20,6 +20,12 @@ json_vacuum_gauge({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "th
 
 json_valve({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": Valve}, Valve).
 
+json_list({}) --> [].
+json_list({A}) --> and_list(A).
+
+and_list((A,B)) --> !, [A], and_list(B).
+and_list(Last)  --> [Last].
+
 json({
     "flow_meter": {
         "analogue_read": {
