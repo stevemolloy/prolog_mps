@@ -10,7 +10,7 @@ statement(T) --> term(T).
 statement([Id1, Op, Id2]) --> term(Id1), binop(Op), statement(Id2).
 
 term(Id)        --> ident(Id).
-term([Unop,Id]) --> unop(Unop), ident(Id).
+term([Unop,Id]) --> unop(Unop), term(Id).
 term(S)         --> ws, "(", statement(S), ")", ws.
 
 ident([L|Ls])  --> ws, [L], { char_type(L, alpha)}, symbol(Ls), ws.
