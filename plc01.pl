@@ -1,6 +1,10 @@
 :- use_module(library(lists)).
 :- use_module(parsing).
 
+json_attribute_value(JSON, Attribute, Value) :-
+        phrase(json_list(JSON), List),
+        member(Attribute:Value, List).
+
 json_conditions(Json, Statement) :-
   member(_:{"conditions":Conditions,_}, Json),
   phrase(statement(Statement), Conditions).
