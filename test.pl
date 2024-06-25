@@ -1,9 +1,12 @@
-% :- use_module(library(dicts)).
+:- use_module(library(dcgs)).
+:- use_module(library(format)).
+:- use_module(library(charsio)).
 
-json({ "name": "John Doe", "age": 30, "city": "New York" }).
-% json({name: "John Doe", age: 30, city: "New York"}).
+term(Str) --> [Var], { phrase(format_("~s", [Var]), Str) }.
+expression(Str) --> [not], expression(T), { phrase(format_("~~~s", [T]), Str) }.
+expression(Str) --> term(Str).
+expression(Str) --> term(T1), keyword(K), term(T2), { phrase(format_("~s ~s ~s", [T1, K, T2]), Str) }.
 
-extract_name({"name": Name, "age": _, "city": _}, Name).
-extract_age({"name": _, "age": Age, "city": _}, Age).
-extract_city({"name": _, "age": _, "city": City}, City).
+keyword("*") --> [and].
+keyword("+") --> [or].
 
