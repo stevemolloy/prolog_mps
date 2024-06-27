@@ -1,8 +1,9 @@
-:- module(parsing, [statement//1, ast_clpbchars/2, ast_truth/2]).
+:- module(parsing, [statement//1, ast_clpbchars/2, clpbchars_satterm/2]).
 
 :- use_module(library(dcgs)).
 :- use_module(library(charsio)).
 :- use_module(library(lists)).
+:- use_module(library(assoc)).
 :- use_module(library(clpb)).
 
 ws --> [W], { char_type(W, whitespace) }, !, ws.
@@ -33,4 +34,8 @@ ast_clpbchars(and(T1, T2), Expr) :-
   ast_clpbchars(T1, Expr1),
   ast_clpbchars(T2, Expr2),
   append(["(", Expr1, " * ", Expr2, ")"], Expr).
+
+clpbchars_satterm(C, T) :-
+  append(["sat(", C, ")."], S),
+  read_from_chars(S, T).
 
