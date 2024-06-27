@@ -1,12 +1,17 @@
 :- use_module(library(dcgs)).
 :- use_module(library(format)).
-:- use_module(library(charsio)).
+:- use_module(library(lists)).
 
-term(Str) --> [Var], { phrase(format_("~s", [Var]), Str) }.
-expression(Str) --> [not], expression(T), { phrase(format_("~~~s", [T]), Str) }.
-expression(Str) --> term(Str).
-expression(Str) --> term(T1), keyword(K), term(T2), { phrase(format_("~s ~s ~s", [T1, K, T2]), Str) }.
-
-keyword("*") --> [and].
-keyword("+") --> [or].
+ast_clpbexpr(id(Id), Id).
+ast_clpbexpr(not(T1), Expr) :-
+  ast_clpbexpr(T1, Expr1),
+  append(["( ~ ", Expr1, " )"], Expr).
+ast_clpbexpr(or(T1, T2), Expr) :-
+  ast_clpbexpr(T1, Expr1),
+  ast_clpbexpr(T2, Expr2),
+  append(["(", Expr1, " + ", Expr2, ")"], Expr).
+ast_clpbexpr(and(T1, T2), Expr) :-
+  ast_clpbexpr(T1, Expr1),
+  ast_clpbexpr(T2, Expr2),
+  append(["(", Expr1, " * ", Expr2, ")"], Expr).
 
