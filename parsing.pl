@@ -11,7 +11,7 @@ statement(and(Id1, Id2))    --> term(Id1), ws, "AND", ws, statement(Id2).
 statement(or(Id1, Id2))     --> term(Id1), ws, "OR", ws, statement(Id2).
 statement(equals(Id1, Id2)) --> term(Id1), ws, "=", ws, statement(Id2).
 
-term(Id)      --> ident(Id).
+term(id(Id))  --> ident(Id).
 term(not(Id)) --> ws, "NOT", ws, term(Id).
 term(S)       --> ws, "(", statement(S), ")", ws.
 
