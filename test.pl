@@ -1,5 +1,3 @@
-:- use_module(library(dcgs)).
-:- use_module(library(format)).
 :- use_module(library(lists)).
 
 ast_clpbexpr(id(Id), Id).
