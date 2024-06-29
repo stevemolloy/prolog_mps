@@ -1,4 +1,4 @@
-:- module(parsing, [statement//1, ast_clpbchars//3, clpbchars_satchars//1]).
+:- module(parsing, [statement//1, ast_clpbchars//1, clpbchars_satchars//1]).
 
 :- use_module(library(dcgs)).
 :- use_module(library(charsio)).
@@ -23,25 +23,20 @@ ident([L|Ls])  --> ws, [L], { char_type(L, alpha)}, symbol(Ls), ws.
 symbol([L|Ls]) --> [L], { char_type(L, ascii_graphic) }, symbol(Ls).
 symbol([])     --> [].
 
-ast_clpbchars(id(Id0), A0, Assoc) --> 
-  {
-    tfilter(dif('.'), Id0, Id),
-    put_assoc(Id0, A0, Id, Assoc),
-    get_assoc(Id0, Assoc, Id)
-  },
-  Id.
-ast_clpbchars(not(T1), A0, Assoc) --> "( ~ ", ast_clpbchars(T1, A0, Assoc), " )".
-ast_clpbchars(or(T1,T2), A0, Assoc) -->
+ast_clpbchars(id(Id0)) --> 
+  { tfilter(dif('.'), Id0, Id) }, Id.
+ast_clpbchars(not(T1)) --> "( ~ ", ast_clpbchars(T1), " )".
+ast_clpbchars(or(T1,T2)) -->
         "(",
-        ast_clpbchars(T1, A0, A1),
+        ast_clpbchars(T1),
         "+",
-        ast_clpbchars(T2, A1, Assoc),
+        ast_clpbchars(T2),
         ")".
-ast_clpbchars(and(T1,T2), A0, Assoc) -->
+ast_clpbchars(and(T1,T2)) -->
         "(",
-        ast_clpbchars(T1, A0, A1),
+        ast_clpbchars(T1),
         "*",
-        ast_clpbchars(T2, A1, Assoc),
+        ast_clpbchars(T2),
         ")".
 
 clpbchars_satchars(C) --> "sat(", C, ").".
