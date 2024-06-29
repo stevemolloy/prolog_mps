@@ -23,21 +23,12 @@ ident([L|Ls])  --> ws, [L], { char_type(L, alpha)}, symbol(Ls), ws.
 symbol([L|Ls]) --> [L], { char_type(L, ascii_graphic) }, symbol(Ls).
 symbol([])     --> [].
 
-ast_clpbchars(id(Id0)) --> 
-  { tfilter(dif('.'), Id0, Id) }, Id.
+ast_clpbchars(id(Id0)) --> { tfilter(dif(.), Id0, Id) }, Id.
 ast_clpbchars(not(T1)) --> "( ~ ", ast_clpbchars(T1), " )".
 ast_clpbchars(or(T1,T2)) -->
-        "(",
-        ast_clpbchars(T1),
-        "+",
-        ast_clpbchars(T2),
-        ")".
+        "(", ast_clpbchars(T1), " + ", ast_clpbchars(T2), ")".
 ast_clpbchars(and(T1,T2)) -->
-        "(",
-        ast_clpbchars(T1),
-        "*",
-        ast_clpbchars(T2),
-        ")".
+        "(", ast_clpbchars(T1), " * ", ast_clpbchars(T2), ")".
 
 clpbchars_satchars(C) --> "sat(", C, ").".
 
