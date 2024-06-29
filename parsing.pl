@@ -1,4 +1,4 @@
-:- module(parsing, [statement//1, ast_clpbchars//2, clpbchars_satterm/2]).
+:- module(parsing, [statement//1, ast_clpbchars//2, clpbchars_satchars//1]).
 
 :- use_module(library(dcgs)).
 :- use_module(library(charsio)).
@@ -23,21 +23,19 @@ symbol([L|Ls]) --> [L], { char_type(L, ascii_graphic) }, symbol(Ls).
 symbol([])     --> [].
 
 ast_clpbchars(id(Id0), Assoc) --> {get_assoc(Id0, Assoc, Id)}, Id.
-ast_clpbchars(not(T1), Assoc) --> {ast_clpbchars(T1, Assoc, Expr1)}, "( ~ ", Expr1, " )".
-ast_clpbchars(or(T1, T2), Assoc) --> 
-  {
-    phrase(ast_clpbchars(T1, Assoc), Expr1),
-    phrase(ast_clpbchars(T2, Assoc), Expr2)
-  },
-  "(", Expr1, " + ", Expr2, ")".
-ast_clpbchars(and(T1, T2), Assoc) --> 
-  {
-    phrase(ast_clpbchars(T1, Assoc), Expr1),
-    phrase(ast_clpbchars(T2, Assoc), Expr2)
-  },
-  "(", Expr1, " * ", Expr2, ")".
+ast_clpbchars(not(T1), Assoc) --> "( ~ ", ast_clpbchars(T1, Assoc), " )".
+ast_clpbchars(or(T1,T2), Assoc) -->
+        "(",
+        ast_clpbchars(T1, Assoc),
+        "+",
+        ast_clpbchars(T2, Assoc),
+        ")".
+ast_clpbchars(and(T1,T2), Assoc) -->
+        "(",
+        ast_clpbchars(T1, Assoc),
+        "*",
+        ast_clpbchars(T2, Assoc),
+        ")".
 
-clpbchars_satterm(C, T) :-
-  phrase(("sat(", C, ")."), S),
-  read_from_chars(S, T).
+clpbchars_satchars(C) --> "sat(", C, ").".
 
