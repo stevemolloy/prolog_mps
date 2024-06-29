@@ -22,18 +22,18 @@ ident([L|Ls])  --> ws, [L], { char_type(L, alpha)}, symbol(Ls), ws.
 symbol([L|Ls]) --> [L], { char_type(L, ascii_graphic) }, symbol(Ls).
 symbol([])     --> [].
 
-ast_clpbchars(id(Id0), A0) --> {get_assoc(Id0, A0, Id)}, Id.
-ast_clpbchars(not(T1), A0) --> {ast_clpbchars(T1, A0, Expr1)}, "( ~ ", Expr1, " )".
-ast_clpbchars(or(T1, T2), A0) --> 
+ast_clpbchars(id(Id0), Assoc) --> {get_assoc(Id0, Assoc, Id)}, Id.
+ast_clpbchars(not(T1), Assoc) --> {ast_clpbchars(T1, Assoc, Expr1)}, "( ~ ", Expr1, " )".
+ast_clpbchars(or(T1, T2), Assoc) --> 
   {
-    phrase(ast_clpbchars(T1, A0), Expr1),
-    phrase(ast_clpbchars(T2, A0), Expr2)
+    phrase(ast_clpbchars(T1, Assoc), Expr1),
+    phrase(ast_clpbchars(T2, Assoc), Expr2)
   },
   "(", Expr1, " + ", Expr2, ")".
-ast_clpbchars(and(T1, T2), A0) --> 
+ast_clpbchars(and(T1, T2), Assoc) --> 
   {
-    phrase(ast_clpbchars(T1, A0), Expr1),
-    phrase(ast_clpbchars(T2, A0), Expr2)
+    phrase(ast_clpbchars(T1, Assoc), Expr1),
+    phrase(ast_clpbchars(T2, Assoc), Expr2)
   },
   "(", Expr1, " * ", Expr2, ")".
 
