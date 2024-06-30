@@ -9,29 +9,21 @@ json_conditions(Json, Statement) :-
   member(_:{"conditions":Conditions,_}, Json),
   phrase(statement(Statement), Conditions).
 
-json_flowmeter({"flow_meter": Flowmeter, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, FlowmeterList) :-
-  phrase(json_list(Flowmeter), FlowmeterList).
+json_flowmeter({"flow_meter": Flowmeter, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, Flowmeter).
 
-json_ionpump({"flow_meter": _, "ion_pump": Ionpump, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, IonpumpList) :-
-  phrase(json_list(Ionpump), IonpumpList).
+json_ionpump({"flow_meter": _, "ion_pump": Ionpump, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, Ionpump).
 
-json_rfdump({"flow_meter": _, "ion_pump": _, "rfdump": Rfdump, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, RfdumpList) :-
-  phrase(json_list(Rfdump), RfdumpList).
+json_rfdump({"flow_meter": _, "ion_pump": _, "rfdump": Rfdump, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, Rfdump).
 
-json_switch({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": Switch, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, SwitchList) :-
-  phrase(json_list(Switch), SwitchList).
+json_switch({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": Switch, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, Switch).
 
-json_thermocouple({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": TC, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, TCList) :-
-  phrase(json_list(TC), TCList).
+json_thermocouple({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": TC, "unidentified objects": _, "vacuum_gauge": _, "valve": _}, TC).
 
-json_unidentified({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": Unident, "vacuum_gauge": _, "valve": _}, UnidentList) :-
-  phrase(json_list(Unident), UnidentList).
+json_unidentified({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": Unident, "vacuum_gauge": _, "valve": _}, Unident).
 
-json_vacuum_gauge({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": Vac, "valve": _}, VacList) :-
-  phrase(json_list(Vac), VacList).
+json_vacuum_gauge({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": Vac, "valve": _}, Vac).
 
-json_valve({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": Valve}, ValveList) :-
-  phrase(json_list(Valve), ValveList).
+json_valve({"flow_meter": _, "ion_pump": _, "rfdump": _, "switch": _, "thermocouple": _, "unidentified objects": _, "vacuum_gauge": _, "valve": Valve}, Valve).
 
 json_length(J, L) :-
   phrase(json_list(J), JL),
