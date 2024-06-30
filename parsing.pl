@@ -32,3 +32,10 @@ ast_clpbchars(and(T1,T2)) -->
 
 clpbchars_satchars(C) --> "sat( ~ (", C, ") )".
 
+string_to_write(Name, Es) --> 
+  ":- use_module(library(clpb)).\n\n",
+  Name, " :-", satitem(Es).
+
+satitem([E]) --> "\n  ", E, ".\n".
+satitem([E | Es]) --> "\n  ", E, ",", satitem(Es).
+
