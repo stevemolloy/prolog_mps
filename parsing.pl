@@ -30,5 +30,5 @@ ast_clpbchars(or(T1,T2)) -->
 ast_clpbchars(and(T1,T2)) -->
         "(", ast_clpbchars(T1), " * ", ast_clpbchars(T2), ")".
 
-clpbchars_satchars(C) --> "sat(", C, ").".
+clpbchars_satchars(C) --> "sat( ~ (", C, ") )".
 
