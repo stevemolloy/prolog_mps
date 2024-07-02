@@ -34,7 +34,7 @@ clpbchars_satchars(C) --> "sat( ~ (", C, ") )".
 
 string_to_write(Name, Es, Assoc) --> 
   ":- use_module(library(clpb)).\n\n",
-  "asserta(clpb:clpb_residuals(bdd)).\n\n",
+  "clpb:clpb_residuals(bdd).\n\n",
   Name, " :-\n",
   "  Vs = (", Vals, {assoc_to_values(Assoc, Vals)}, ")", 
   satitem(Es).
