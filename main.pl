@@ -1,9 +1,13 @@
 :- use_module(library(dcgs)).
 :- use_module(library(pio)).
 :- use_module(library(assoc)).
+:- use_module(library(pairs)).
 :- use_module(library(debug)).
 
 :- use_module(parsing).
+
+assocs_vars([]) --> [].
+assocs_vars([A | As]) --> { assoc_to_values(A, Vals) }, Vals, assocs_vars(As).
 
 topjson_assoc_satpreds(Json, Assoc, Satpreds) :-
   json_attribute_value(Json, "rfdump", R),  % Drill down to "rfdump"
@@ -15,10 +19,11 @@ topjson_assoc_satpreds(Json, Assoc, Satpreds) :-
   phrase(clpbchars_satchars(CC), Satpreds). % Wrap these strings inside sat predicates
 
 % This is still not working.
-main :- 
+run :-
   json(J),
   findall(Assoc-S, topjson_assoc_satpreds(J, Assoc, S), Solutions),
-  pairs_keys_values(Solutions, A),
-  phrase_to_file(string_to_write("experiment", Solutions, A), "testingtesting.pl").
+  pairs_keys_values(Solutions, As, S),
+  phrase(assocs_vars(As), Vals),
+  phrase_to_file(string_to_write("experiment", S, Vals), "testingtesting.pl").
 
 

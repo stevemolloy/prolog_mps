@@ -32,13 +32,17 @@ ast_clpbchars(and(T1,T2), A0, A) -->
 
 clpbchars_satchars(C) --> "sat( ~ (", C, ") )".
 
-string_to_write(Name, Es, Assoc) --> 
+string_to_write(Name, Es, Vals) --> 
   ":- use_module(library(clpb)).\n\n",
   "clpb:clpb_residuals(bdd).\n\n",
   Name, " :-\n",
-  "  Vs = (", Vals, {assoc_to_values(Assoc, Vals)}, ")", 
-  satitem(Es).
+  "  Vs = [", vallist(Vals), "],", 
+  satitem(Es), ",\n",
+  "  labeling(Vs).\n".
 
-satitem([E]) --> "\n  ", E, ".\n".
+vallist([V | Vs]) --> V, ", ", vallist(Vs).
+vallist([V]) --> V.
+
+satitem([E]) --> "\n  ", E.
 satitem([E | Es]) --> "\n  ", E, ",", satitem(Es).
 
