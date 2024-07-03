@@ -18,7 +18,6 @@ topjson_assoc_satpreds(Json, Assoc, Satpreds) :-
   phrase(ast_clpbchars(S, A0, Assoc), CC),  % From the AST to character strings
   phrase(clpbchars_satchars(CC), Satpreds). % Wrap these strings inside sat predicates
 
-% This is still not working.
 run :-
   json(J),
   findall(Assoc-S, topjson_assoc_satpreds(J, Assoc, S), Solutions),
