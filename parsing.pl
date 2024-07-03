@@ -37,12 +37,14 @@ string_to_write(Name, Es, Vals) -->
   "clpb:clpb_residuals(bdd).\n\n",
   Name, " :-\n",
   "  Vs = [", vallist(Vals), "],", 
-  satitem(Es), ",\n",
+  satitems(Es), ",\n",
   "  labeling(Vs).\n".
 
-vallist([V | Vs]) --> V, ", ", vallist(Vs).
-vallist([V]) --> V.
+vallist([V|Vs]) --> vallist_(Vs, V).
+vallist_([], V) --> V.
+vallist_([V|Vs], V0) --> V0, ", ", vallist_(Vs, V).
 
-satitem([E]) --> "\n  ", E.
-satitem([E | Es]) --> "\n  ", E, ",", satitem(Es).
+satitems([E|Es]) --> satitems_(Es, E).
+satitems_([], E) --> "\n  ", E.
+satitems_([E|Es], E0) --> "\n  ", E0, ",", satitems_(Es, E).
 
