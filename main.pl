@@ -24,6 +24,7 @@ run :-
   findall(Assoc-S, topjson_assoc_satpreds(J, Assoc, S), Solutions),
   pairs_keys_values(Solutions, As, S),
   phrase(assocs_vars(As), Vals),
-  phrase_to_file(string_to_write("experiment", S, Vals), "testingtesting.pl").
+  sort(Vals, Sortedvals),
+  phrase_to_file(string_to_write("experiment", S, Sortedvals), "testingtesting.pl").
 
 
