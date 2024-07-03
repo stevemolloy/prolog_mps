@@ -35,8 +35,9 @@ clpbchars_satchars(C) --> "sat( ~ (", C, ") )".
 string_to_write(Name, Es, Vals) --> 
   ":- use_module(library(clpb)).\n\n",
   "clpb:clpb_residuals(bdd).\n\n",
-  Name, " :-\n",
+  Name, "(Vs) :-\n",
   "  Vs = [", vallist(Vals), "],", 
+  "\n  sat( B_R3_RING_CURRENT_LIBHOT_S ),",
   satitems(Es), ",\n",
   "  labeling(Vs).\n".
 
