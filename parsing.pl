@@ -32,12 +32,14 @@ ast_clpbchars(and(T1,T2), A0, A) -->
 
 clpbchars_satchars(C) --> "sat( ~ (", C, ") )".
 
-string_to_write(Name, Es, Vals) --> 
-  ":- use_module(library(clpb)).\n\n",
+satlist_predicate(Name, Es, Vals) --> 
+  ":- use_module(library(clpb)).\n",
+  ":- use_module(library(debug)).\n\n",
   "clpb:clpb_residuals(bdd).\n\n",
   Name, "(Vs) :-\n",
   "  Vs = [", vallist(Vals), "],", 
   "\n  sat( B_R3_RING_CURRENT_LIBHOT_S ),",
+  "\n  sat( B_R3_RING_CURRENT_HOT_S ),",
   satitems(Es), ",\n",
   "  labeling(Vs).\n".
 
