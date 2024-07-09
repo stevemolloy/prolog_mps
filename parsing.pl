@@ -1,4 +1,4 @@
-:- module(parsing, [ast//1, ast_goal/2, asts_goals//1]).
+:- module(parsing, [ast//1, ast_goal/4, asts_goals//1]).
 
 :- use_module(library(dcgs)).
 :- use_module(library(charsio)).
@@ -23,21 +23,23 @@ ident([L|Ls])  --> ws, [L], { char_type(L, alpha)}, symbol(Ls), ws.
 symbol([L|Ls]) --> [L], { char_type(L, ascii_graphic) }, symbol(Ls).
 symbol([])     --> [].
 
-ast_term(id(Id), Id).
-ast_term(or(Tree1, Tree2), T) :-
+ast_term(id(Id0), Id, A0, A) :-
+  put_assoc(Id0, A0, _, A),
+  get_assoc(Id0, A, Id).
+ast_term(or(Tree1, Tree2), T, A0, A) :-
   T = T1 + T2,
-  ast_term(Tree1, T1),
-  ast_term(Tree2, T2).
-ast_term(and(Tree1, Tree2), T) :-
+  ast_term(Tree1, T1, A0, A1),
+  ast_term(Tree2, T2, A1, A).
+ast_term(and(Tree1, Tree2), T, A0, A) :-
   T = T1 * T2,
-  ast_term(Tree1, T1),
-  ast_term(Tree2, T2).
-ast_term(not(Tree), T) :-
+  ast_term(Tree1, T1, A0, A1),
+  ast_term(Tree2, T2, A1, A).
+ast_term(not(Tree), T, A0, A) :-
   T = ~T0,
-  ast_term(Tree, T0).
+  ast_term(Tree, T0, A0, A).
 
-ast_goal(Ast, Goal) :-
-  ast_term(Ast, Term),
+ast_goal(Ast, Goal, A0, A) :-
+  ast_term(Ast, Term, A0, A),
   Goal = sat(Term).
 
 asts_goals([]) --> [].
