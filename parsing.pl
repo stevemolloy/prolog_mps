@@ -37,7 +37,7 @@ ast_term(not(Tree), Assoc, T) :-
 
 ast_goal(Ast, Assoc, Goal) :-
   ast_term(Ast, Assoc, Term),
-  Goal = sat(Term).
+  Goal = sat(~ Term).
 
 asts_goals([]) --> [].
 asts_goals([A | As]) --> {ast_goal(A, G)}, [G], asts_goals(As).
