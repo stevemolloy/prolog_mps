@@ -25,12 +25,10 @@ symbol([])     --> [].
 
 ast_term(id(Id0), Assoc, Id) :-
   get_assoc(Id0, Assoc, Id).
-ast_term(or(Tree1, Tree2), Assoc, T) :-
-  T = T1 + T2,
+ast_term(or(Tree1, Tree2), Assoc, T1 + T2) :-
   ast_term(Tree1, Assoc, T1),
   ast_term(Tree2, Assoc, T2).
-ast_term(and(Tree1, Tree2), Assoc, T) :-
-  T = T1 * T2,
+ast_term(and(Tree1, Tree2), Assoc, T1 * T2) :-
   ast_term(Tree1, Assoc, T1),
   ast_term(Tree2, Assoc, T2).
 ast_term(not(Tree), Assoc, T) :-
