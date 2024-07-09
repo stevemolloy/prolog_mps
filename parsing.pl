@@ -10,7 +10,7 @@
 ws --> [W], { char_type(W, whitespace) }, !, ws.
 ws --> [].
 
-ast(T, A0, A) --> term(T, A0, A).
+ast(T, A0, A)                --> term(T, A0, A).
 ast(and(Id1, Id2), A0, A)    --> term(Id1, A0, A1), ws, "AND", ws, ast(Id2, A1, A).
 ast(or(Id1, Id2), A0, A)     --> term(Id1, A0, A1), ws, "OR", ws, ast(Id2, A1, A).
 ast(equals(Id1, Id2), A0, A) --> term(Id1, A0, A1), ws, "=", ws, ast(Id2, A1, A).
