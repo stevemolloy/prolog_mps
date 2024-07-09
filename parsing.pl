@@ -15,7 +15,7 @@ ast(and(Id1, Id2), A0, A)    --> term(Id1, A0, A1), ws, "AND", ws, ast(Id2, A1, 
 ast(or(Id1, Id2), A0, A)     --> term(Id1, A0, A1), ws, "OR", ws, ast(Id2, A1, A).
 ast(equals(Id1, Id2), A0, A) --> term(Id1, A0, A1), ws, "=", ws, ast(Id2, A1, A).
 
-term(id(Id), A0, A)  --> {put_assoc(Id, A0, _, A)}, ident(Id).
+term(id(Id), A0, A)  --> ident(Id), {put_assoc(Id, A0, _, A)}.
 term(not(Id), A0, A) --> ws, "NOT", ws, term(Id, A0, A).
 term(S, A0, A)       --> ws, "(", ast(S, A0, A), ")", ws.
 
