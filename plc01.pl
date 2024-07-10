@@ -1,7 +1,7 @@
 :- use_module(library(lists)).
 :- use_module(parsing).
 
-json_attribute_value(JSON, Attribute, Value) :-
+json_attr_value(JSON, Attribute, Value) :-
         phrase(json_list(JSON), List),
         member(Attribute:Value, List).
 
