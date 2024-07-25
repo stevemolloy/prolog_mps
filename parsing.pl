@@ -1,4 +1,4 @@
-:- module(parsing, [ast//3, ast_goal/3, asts_goals//1]).
+:- module(parsing, [ast//3, ast_goal/3, astlist//3, goallist//2]).
 
 :- use_module(library(dcgs)).
 :- use_module(library(charsio)).
@@ -39,6 +39,9 @@ ast_goal(Ast, Assoc, Goal) :-
   ast_term(Ast, Assoc, Term),
   Goal = sat(~ Term).
 
-asts_goals([]) --> [].
-asts_goals([A | As]) --> {ast_goal(A, G)}, [G], asts_goals(As).
+astlist([Cond | Conds], A0, A) --> {phrase(ast(Ast, A0, A1), Cond)}, [Ast], astlist(Conds, A1, A).
+astlist([], A, A) --> [].
+
+goallist([Ast | Asts], A) --> {ast_goal(Ast, A, Goal)}, [Goal], goallist(Asts, A).
+goallist([], _) --> [].
 

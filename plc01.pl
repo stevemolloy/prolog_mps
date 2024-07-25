@@ -1,6 +1,25 @@
 :- use_module(library(lists)).
 :- use_module(parsing).
 
+topjson_assoc_goal(Json, Assoc, Goal) :-
+  json_attr_value(Json, "rfdump", Rfdump),  % Drill down to "rfdump"
+  json_attr_value(Rfdump, _, Children),     % Then to its child objects
+  json_attr_value(Children, "conditions", Conds), % Finally, find the condition statements
+  empty_assoc(A0),                          % Keep the assoc list for reference later
+  phrase(ast(Ast, A0, Assoc), Conds),       % Parse these into an AST
+  ast_goal(Ast, Assoc, Goal).
+
+json_condlist(J, CondList) :-
+  findall(
+    Conds, 
+    (
+      json_attr_value(J, "rfdump", Rfdump),
+      json_attr_value(Rfdump, _, Children),
+      json_attr_value(Children, "conditions", Conds)
+    ),
+    CondList
+  ).
+
 json_attr_value(JSON, Attribute, Value) :-
         phrase(json_list(JSON), List),
         member(Attribute:Value, List).
